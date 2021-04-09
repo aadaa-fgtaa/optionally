@@ -12,16 +12,9 @@ import Prelude
 import System.IO.Unsafe
 import Unsafe.Coerce
 
-class EitherC l r where
-  getEitherC :: Either (Dict l) (Dict r)
 
-instance r => EitherC l r where
-  getEitherC = Right Dict
-
-
-
-eitherC' :: forall l r a . l => (Hold r => r) => (EitherC l r => a) -> a
-eitherC' f = case mkEitherC eith of Dict -> f
+eitherC :: forall l r a . (l, Hold r => r) => (Either (Dict l) (Dict r) -> a) -> a
+eitherC f = f eith
   where
     r :: Dict r
     r = sub @r undefinedDict
@@ -34,9 +27,6 @@ sub Dict = Dict
 
 newtype Gift c a = Gift { unGift :: c => a }
 
-mkEitherC :: Either (Dict l) (Dict r) -> Dict (EitherC l r)
-mkEitherC = unsafeCoerce (Gift Dict :: Gift (EitherC l r) (Dict (EitherC l r)))
-
 undefinedDict :: Dict c
 undefinedDict = unsafeCoerce (Gift Dict :: Gift c (Dict c)) (errorWithoutStackTrace "")
 
@@ -45,8 +35,11 @@ forceDict Dict = unGift @c $ unsafeCoerce (`seq` ())
 
 
 
-eitherC :: forall l r a . l => (Hold r => r) => (Either (Dict l) (Dict r) -> a) -> a
-eitherC f = eitherC' @l @r $ f $ getEitherC @l @r
+eitherC' :: (l, Hold r => r) => Either (Dict l) (Dict r)
+eitherC' = eitherC id
+
+eitherC_ :: forall l r a . (l, Hold r => r) => (l => a) -> (r => a) -> a
+eitherC_ f g = eitherC @l @r $ either (\Dict -> f) (\Dict -> g)
 
 instanceExist :: forall r . (Hold r => r) => Bool
 instanceExist = eitherC @() @r isRight

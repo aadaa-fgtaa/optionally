@@ -2,9 +2,9 @@
 {-# LANGUAGE UndecidableSuperClasses #-}
 
 module EitherConstraint (
-  EitherC ( getEitherC )
+  eitherC
 , eitherC'
-, eitherC
+, eitherC_
 , instanceExist
 , module Data.Constraint
 , Hold )

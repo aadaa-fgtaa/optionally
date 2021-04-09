@@ -36,13 +36,8 @@ main = do
   putStrLn $ "instance Fast (): " <> show do instanceExist @(Fast ())
   putStrLn $ "instance Fast Bool: " <> show do instanceExist @(Fast Bool)
 
-  putStrLn $ eitherC @(Slow ()) @(Fast ()) \case
-    Left Dict -> slow ()
-    Right Dict -> fast ()
-
-  putStrLn $ eitherC @(Slow Bool) @(Fast Bool) \case
-    Left Dict -> slow True
-    Right Dict -> fast True
+  putStrLn $ eitherC_ @(Slow ()) @(Fast ()) (slow ()) (fast ())
+  putStrLn $ eitherC_ @(Slow Bool) @(Fast Bool) (slow True) (fast True)
 ```
 
 Output:
