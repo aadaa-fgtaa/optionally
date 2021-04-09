@@ -1,0 +1,117 @@
+name:                eitherconstraint
+version:             0.0.0.0
+github:              aadaa-fgtaa/eitherconstraint
+license:             BSD3
+author:              aadaa_fgtaa
+maintainer:          aadaa_fgtaa@pm.me
+copyright:           2021 aadaa_fgtaa
+
+extra-source-files:
+- README.md
+- LICENSE
+
+description:         Please see the README on Github at <https://github.com/aadaa-fgtaa/eitherconstraint#readme>
+
+dependencies:
+- base >= 4.12 && < 5
+- constraints
+
+ghc-options:
+  -Wall
+  -Wincomplete-uni-patterns
+  -Wincomplete-record-updates
+  -Wmonomorphism-restriction
+  -Wimplicit-prelude
+  -Wmissing-exported-signatures
+  -Wmissing-export-lists
+  -Widentities
+  -Wredundant-constraints
+  -Wpartial-fields
+  -Wmissing-deriving-strategies
+  -Wunused-packages
+  -Wunused-type-patterns
+  -Werror=overflowed-literals
+  -Werror=missing-fields
+  -Werror=missing-methods
+  -Werror=tabs
+  -Werror=incomplete-patterns
+  -Werror=incomplete-uni-patterns
+  -Werror=incomplete-record-updates
+  -Werror=wrong-do-bind
+
+default-extensions:
+  BangPatterns
+  BlockArguments
+  ConstraintKinds
+  DataKinds
+  DefaultSignatures
+  DeriveAnyClass
+  DeriveDataTypeable
+  DeriveGeneric
+  DeriveTraversable
+  DerivingStrategies
+  DerivingVia
+  DuplicateRecordFields
+  EmptyCase
+  FlexibleContexts
+  FlexibleInstances
+  FunctionalDependencies
+  GADTs
+  GeneralizedNewtypeDeriving
+  InstanceSigs
+  LambdaCase
+  MultiWayIf
+  NamedFieldPuns
+  NamedWildCards
+  NegativeLiterals
+  NoImplicitPrelude
+  NoMonomorphismRestriction
+  NumDecimals
+  OverloadedLabels
+  OverloadedLists
+  OverloadedStrings
+  PackageImports
+  PatternSynonyms
+  PolyKinds
+  PostfixOperators
+  QuantifiedConstraints
+  RankNTypes
+  RecordWildCards
+  RecursiveDo
+  RoleAnnotations
+  ScopedTypeVariables
+  StandaloneDeriving
+  TupleSections
+  TypeApplications
+  TypeFamilyDependencies
+  TypeOperators
+  ViewPatterns
+
+library:
+  source-dirs: src
+
+executables:
+  eitherconstraint-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - eitherconstraint
+
+tests:
+  eitherconstraint-test:
+    main:                Main.hs
+    source-dirs:         test
+    dependencies:
+    - eitherconstraint
+    - hspec
+    - hedgehog
+    - hspec-hedgehog
+
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N

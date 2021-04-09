@@ -1,0 +1,74 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.34.4.
+--
+-- see: https://github.com/sol/hpack
+
+name:           eitherconstraint
+version:        0.0.0.0
+description:    Please see the README on Github at <https://github.com/aadaa-fgtaa/eitherconstraint#readme>
+homepage:       https://github.com/aadaa-fgtaa/eitherconstraint#readme
+bug-reports:    https://github.com/aadaa-fgtaa/eitherconstraint/issues
+author:         aadaa_fgtaa
+maintainer:     aadaa_fgtaa@pm.me
+copyright:      2021 aadaa_fgtaa
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    LICENSE
+
+source-repository head
+  type: git
+  location: https://github.com/aadaa-fgtaa/eitherconstraint
+
+library
+  exposed-modules:
+      EitherConstraint
+      EitherConstraintImpl
+  other-modules:
+      Paths_eitherconstraint
+  hs-source-dirs:
+      src
+  default-extensions:
+      BangPatterns BlockArguments ConstraintKinds DataKinds DefaultSignatures DeriveAnyClass DeriveDataTypeable DeriveGeneric DeriveTraversable DerivingStrategies DerivingVia DuplicateRecordFields EmptyCase FlexibleContexts FlexibleInstances FunctionalDependencies GADTs GeneralizedNewtypeDeriving InstanceSigs LambdaCase MultiWayIf NamedFieldPuns NamedWildCards NegativeLiterals NoImplicitPrelude NoMonomorphismRestriction NumDecimals OverloadedLabels OverloadedLists OverloadedStrings PackageImports PatternSynonyms PolyKinds PostfixOperators QuantifiedConstraints RankNTypes RecordWildCards RecursiveDo RoleAnnotations ScopedTypeVariables StandaloneDeriving TupleSections TypeApplications TypeFamilyDependencies TypeOperators ViewPatterns
+  ghc-options: -Wall -Wincomplete-uni-patterns -Wincomplete-record-updates -Wmonomorphism-restriction -Wimplicit-prelude -Wmissing-exported-signatures -Wmissing-export-lists -Widentities -Wredundant-constraints -Wpartial-fields -Wmissing-deriving-strategies -Wunused-packages -Wunused-type-patterns -Werror=overflowed-literals -Werror=missing-fields -Werror=missing-methods -Werror=tabs -Werror=incomplete-patterns -Werror=incomplete-uni-patterns -Werror=incomplete-record-updates -Werror=wrong-do-bind
+  build-depends:
+      base >=4.12 && <5
+    , constraints
+  default-language: Haskell2010
+
+executable eitherconstraint-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_eitherconstraint
+  hs-source-dirs:
+      app
+  default-extensions:
+      BangPatterns BlockArguments ConstraintKinds DataKinds DefaultSignatures DeriveAnyClass DeriveDataTypeable DeriveGeneric DeriveTraversable DerivingStrategies DerivingVia DuplicateRecordFields EmptyCase FlexibleContexts FlexibleInstances FunctionalDependencies GADTs GeneralizedNewtypeDeriving InstanceSigs LambdaCase MultiWayIf NamedFieldPuns NamedWildCards NegativeLiterals NoImplicitPrelude NoMonomorphismRestriction NumDecimals OverloadedLabels OverloadedLists OverloadedStrings PackageImports PatternSynonyms PolyKinds PostfixOperators QuantifiedConstraints RankNTypes RecordWildCards RecursiveDo RoleAnnotations ScopedTypeVariables StandaloneDeriving TupleSections TypeApplications TypeFamilyDependencies TypeOperators ViewPatterns
+  ghc-options: -Wall -Wincomplete-uni-patterns -Wincomplete-record-updates -Wmonomorphism-restriction -Wimplicit-prelude -Wmissing-exported-signatures -Wmissing-export-lists -Widentities -Wredundant-constraints -Wpartial-fields -Wmissing-deriving-strategies -Wunused-packages -Wunused-type-patterns -Werror=overflowed-literals -Werror=missing-fields -Werror=missing-methods -Werror=tabs -Werror=incomplete-patterns -Werror=incomplete-uni-patterns -Werror=incomplete-record-updates -Werror=wrong-do-bind -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.12 && <5
+    , constraints
+    , eitherconstraint
+  default-language: Haskell2010
+
+test-suite eitherconstraint-test
+  type: exitcode-stdio-1.0
+  main-is: Main.hs
+  other-modules:
+      Paths_eitherconstraint
+  hs-source-dirs:
+      test
+  default-extensions:
+      BangPatterns BlockArguments ConstraintKinds DataKinds DefaultSignatures DeriveAnyClass DeriveDataTypeable DeriveGeneric DeriveTraversable DerivingStrategies DerivingVia DuplicateRecordFields EmptyCase FlexibleContexts FlexibleInstances FunctionalDependencies GADTs GeneralizedNewtypeDeriving InstanceSigs LambdaCase MultiWayIf NamedFieldPuns NamedWildCards NegativeLiterals NoImplicitPrelude NoMonomorphismRestriction NumDecimals OverloadedLabels OverloadedLists OverloadedStrings PackageImports PatternSynonyms PolyKinds PostfixOperators QuantifiedConstraints RankNTypes RecordWildCards RecursiveDo RoleAnnotations ScopedTypeVariables StandaloneDeriving TupleSections TypeApplications TypeFamilyDependencies TypeOperators ViewPatterns
+  ghc-options: -Wall -Wincomplete-uni-patterns -Wincomplete-record-updates -Wmonomorphism-restriction -Wimplicit-prelude -Wmissing-exported-signatures -Wmissing-export-lists -Widentities -Wredundant-constraints -Wpartial-fields -Wmissing-deriving-strategies -Wunused-packages -Wunused-type-patterns -Werror=overflowed-literals -Werror=missing-fields -Werror=missing-methods -Werror=tabs -Werror=incomplete-patterns -Werror=incomplete-uni-patterns -Werror=incomplete-record-updates -Werror=wrong-do-bind -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.12 && <5
+    , constraints
+    , eitherconstraint
+    , hedgehog
+    , hspec
+    , hspec-hedgehog
+  default-language: Haskell2010
