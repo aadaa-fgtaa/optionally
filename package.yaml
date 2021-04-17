@@ -1,6 +1,6 @@
-name:                eitherconstraint
+name:                optionally
 version:             0.0.0.0
-github:              aadaa-fgtaa/eitherconstraint
+github:              aadaa-fgtaa/optionally
 license:             BSD3
 author:              aadaa_fgtaa
 maintainer:          aadaa_fgtaa@pm.me
@@ -10,7 +10,7 @@ extra-source-files:
 - README.md
 - LICENSE
 
-description:         Please see the README on Github at <https://github.com/aadaa-fgtaa/eitherconstraint#readme>
+description:         Please see the README on Github at <https://github.com/aadaa-fgtaa/optionally#readme>
 
 dependencies:
 - base >= 4.12 && < 5
@@ -91,7 +91,7 @@ library:
   source-dirs: src
 
 executables:
-  eitherconstraint-exe:
+  optionally-example:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
@@ -99,14 +99,16 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - eitherconstraint
+    - mtl
+    - containers
+    - optionally
 
 tests:
-  eitherconstraint-test:
+  optionally-test:
     main:                Main.hs
     source-dirs:         test
     dependencies:
-    - eitherconstraint
+    - optionally
     - hspec
     - hedgehog
     - hspec-hedgehog

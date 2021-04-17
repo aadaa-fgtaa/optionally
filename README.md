@@ -1,16 +1,16 @@
-# eitherconstraint
+# optionally
 
 __DISCLAIMER: NEVER USE THIS EXCEPT FOR FUN.__
 
-Union of constrains that tries to satisfy right one and fallbacks to left if failed.
+Require constraints `Optionally`. See [this blog
+post](https://aadaa-fgtaa.github.io/blog/optionally/) for implementation details and limitations.
 
-TODO Describe how it works and why you should never use it seriously.
+__NOTE__ Works only with optimisations enabled so don't forget to pass `-fobject-code -O` if you
+want to test it in ghci.
 
 Example:
 
 ```haskell
-import EitherConstraint
-
 class Foo
 instance Foo
 
@@ -29,24 +29,60 @@ instance Slow Bool where
 instance Fast Bool where
   fast _ = "fast @Bool"
 
-main :: IO ()
-main = do
-  putStrLn $ "instance Foo: " <> show do instanceExist @Foo
-  putStrLn $ "instance Bar: " <> show do instanceExist @Bar
-  putStrLn $ "instance Fast (): " <> show do instanceExist @(Fast ())
-  putStrLn $ "instance Fast Bool: " <> show do instanceExist @(Fast Bool)
+class Baz (a :: k)
 
-  putStrLn $ eitherC_ @(Slow ()) @(Fast ()) (slow ()) (fast ())
-  putStrLn $ eitherC_ @(Slow Bool) @(Fast Bool) (slow True) (fast True)
+instance Baz 1
+instance Baz 'True
+
+tryShow :: forall a . Show? a => a -> Maybe String
+tryShow a = tryC @(Show a) $ show a
+
+fastOrSlow :: forall a . (Slow a, Fast? a) => a -> String
+fastOrSlow = orC @(Fast a) fast slow
+
+nubSmart :: forall a . (Eq a, Ord? a) => [a] -> [a]
+nubSmart a = orC @(Ord a) (trace "nubOrd" $ nubOrd a) (trace "nubEq" $ nub a)
+
+nubForceEq :: forall a . Eq a => [a] -> [a]
+nubForceEq = discard @(Ord a) nubSmart
+
+nubForceOrd :: forall a . Ord a => [a] -> [a]
+nubForceOrd = give @(Ord a) nubSmart
+
+newtype NoOrd a = NoOrd a
+  deriving stock (Show, Eq)
 ```
 
-Output:
-
 ```
-instance Foo: True
-instance Bar: False
-instance Fast (): False
-instance Fast Bool: True
-slow @()
-fast @Bool
+isSatisfied @Foo: True
+isSatisfied @Bar: False
+isSatisfied @(Baz 1): True
+isSatisfied @(Baz 2): False
+isSatisfied @(Baz 'True): True
+isSatisfied @(Baz 'False): False
+isSatisfied @(Show Int): True
+isSatisfied @(Show [Int]): True
+isSatisfied @(Show [Int -> Int]): False
+isSatisfied @(Monad IO): True
+isSatisfied @(MonadReader Int IO): False
+isSatisfied @(MonadReader Int (ReaderT Int IO)): True
+
+tryShow True: Just "True"
+tryShow $ id @Bool: Nothing
+tryShow (True, ()): Just "(True,())"
+tryShow (True, id @Bool): Nothing
+
+fastOrSlow (): "slow @()"
+fastOrSlow True: "fast @Bool"
+
+-- traces are printed too early but you got the idea
+
+nubOrd
+nubSmart [1, 2 :: Int]: [1,2]
+nubEq
+nubSmart [NoOrd 1, NoOrd 2 :: NoOrd Int]: [NoOrd 1,NoOrd 2]
+nubOrd
+nubForceOrd [1, 2 :: Int]: [1,2]
+nubEq
+nubForceEq [NoOrd 1, NoOrd 2 :: NoOrd Int]: [NoOrd 1,NoOrd 2]
 ```
